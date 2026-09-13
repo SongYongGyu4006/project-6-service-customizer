@@ -14,6 +14,7 @@ function App() {
     }
 
     setLoading(true);
+    setResults(null);
     
     try {
       const response = await fetch('http://localhost:5001/analyze-service', {
@@ -37,6 +38,11 @@ function App() {
     }
   };
 
+  // Enhanced loading indicator with spinner
+  const renderLoading = () => (
+    <div className="loading-spinner"></div>
+  );
+
   return (
     <div className="App">
       <header className="App-header">
@@ -55,6 +61,8 @@ function App() {
             <option value="slack">Slack</option>
             <option value="trello">Trello</option>
             <option value="google-calendar">Google Calendar</option>
+            <option value="github">GitHub</option>
+            <option value="vscode">VS Code</option>
           </select>
         </div>
 
@@ -76,12 +84,14 @@ function App() {
           {loading ? '분석 중...' : '분석 시작'}
         </button>
         
+        {loading && renderLoading()}
+        
         {results && (
           <div id="results" className="results">
-            <h2>분석 결과</h2>
+            <h2>✨ 분석 결과</h2>
             <div className="result-item">
-              <h3>서비스 분석: {results.service}</h3>
-              <p><strong>분석 내용:</strong> {results.analysis}</p>
+              <h3>서비스 분석</h3>
+              <p><strong>상세 내용:</strong> {results.analysis}</p>
             </div>
             
             <div className="result-item">
